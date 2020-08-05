@@ -1,61 +1,68 @@
 #This application serves as a login interface.
-import getpass
-from pathlib import Path
-import csv
+import getpass 
+from pathlib import Path 
 
-ufilepath = Path("./users.csv")
-pfilepath = Path("./passwords.csv")
-users = []
-passwords = []
+ufilepath = Path("./users.txt")
+pfilepath = Path("./passwords.txt")
+users = set()
+passwords = set()
 
-def readUserCSV():
-    openUsers = open(ufilepath, newline='')
-    csvfile = csv.reader(openUsers)
-    users = list(csvfile)
 
-def readPassCSV():
-    openPass = open(pfilepath, newline='')
-    csvfile1 = csv.reader(openPass)
-    passwords = list(csvfile1)
 
-def writeUsersCSV():
-    csvfile = open(ufilepath,'w')
-    writer = csv.writer(csvfile)
+def read_user(users):
+    open_ufile = open(ufilepath, 'r')
+    users = set(str(open_ufile))
+
+def read_pass(passwords):
+    open_pfile = open(pfilepath, 'r')
+    passwords = set(str(open_pfile))
+
+def write_users():
+    close_ufile = open(ufilepath, 'w')
     for val in users:
-        writer.writerow(val) 
+        close_ufile.write(val)
 
-def writePasswordCSV():
-    csvfile1 = open(pfilepath,'w')
-    writer = csv.writer(csvfile1)
+def write_pass():
+    close_pfile = open(pfilepath, 'w')
     for val in passwords:
-        writer.writerow(val.strip()) 
+        close_pfile.write(val) 
  
-def get_User():
-    uname = input("Input new Username: ")
-    for x in users:
-        if uname == x: 
-            print("Username already in use!")
-            exit    
-        else:
-            print("Username accepted!")
-            users.append(uname)
+def get_user():
+    uname = input("\nInput new Username: ")
+    previous = len(users)
+    users.add(uname)
+    if previous < len(users):
+        print("\nUsername accepted.")
+    else:
+        print("\nUsername already in use.")
+    return 1    
             
-def get_Pass():
-    passw = getpass.getpass("Input new Password:")
-    passwords.append(passw)
+def get_pass():
+    passw = getpass.getpass("\nInput new Password:")
+    passwords.add(passw)
+    print("\nThank you for your time!\n")
 
-index = input("Sign up or sign in? ")
+def goto(line):
+    global lineNumber
+    lineNumber = line
+
+
+read_user(users)
+read_pass(passwords)
+
+index = input("\nSign up or sign in? ")
 
 if index == "Sign up" or index == "sign up":
-    get_User()
-    get_Pass()
-    writeUsersCSV()
-    writePasswordCSV()
+    if get_user() == 1:
+        goto(54)
+    else:
+        pass
+    get_pass()
+    write_users()
+    write_pass()
     
 else:
     access = False
-    readUserCSV()
-    readPassCSV()
     while access == False : 
         uname = input("Username: ")
         for x in users:
