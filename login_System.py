@@ -37,14 +37,16 @@ def write_pass():
     writer.writerow(passwords) 
  
 def get_user():
-    uname = input("\nInput new Username: ")
-    previous = len(users)
-    users.append(uname)
-    if previous < len(users):
-        print("\nUsername accepted.")
-    else:
-        print("\nUsername already in use.")
-    return 1    
+    while True:
+        uname = input("\nInput new Username: ")
+        if uname in users:
+            print("\nUsername already in use!\n")
+        else: 
+            users.append(uname)
+            print("\nUsername not in use!\n")
+            break
+            
+
             
 def get_pass():
     passw = getpass.getpass("\nInput new Password:")
@@ -63,10 +65,7 @@ clear()
 index = input("\nSign up or sign in? ")
 
 if index == "Sign up" or index == "sign up":
-    if get_user() == 1:
-        goto(54)
-    else:
-        pass
+    get_user()
     get_pass()
     write_users()
     write_pass()
