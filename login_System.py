@@ -1,36 +1,45 @@
 #This application serves as a login interface.
 import getpass 
 from pathlib import Path 
+import csv
+import os
 
-ufilepath = Path("./users.txt")
-pfilepath = Path("./passwords.txt")
-users = set()
-passwords = set()
+ufilepath = Path("./users.csv")
+pfilepath = Path("./passwords.csv")
+users = []
+passwords = []
 
 
+def clear():
+	if os.name == 'nt':
+		os.system('CLS')
+	if os.name == 'posix':
+		os.system('clear')
 
 def read_user(users):
-    open_ufile = open(ufilepath, 'r')
-    users = set(str(open_ufile))
+    open_users = open(ufilepath, newline='')
+    csv_user = csv.reader(open_users)
+    users = list(csv_user)
 
 def read_pass(passwords):
-    open_pfile = open(pfilepath, 'r')
-    passwords = set(str(open_pfile))
+    open_pass = open(pfilepath, newline='')
+    csv_pass = csv.reader(open_pass)
+    passwords = list(csv_pass)
 
 def write_users():
-    close_ufile = open(ufilepath, 'w')
-    for val in users:
-        close_ufile.write(val)
+    csvfile = open(ufilepath,'w')
+    writer = csv.writer(csvfile)
+    writer.writerow(users) 
 
 def write_pass():
-    close_pfile = open(pfilepath, 'w')
-    for val in passwords:
-        close_pfile.write(val) 
+    csvfile = open(pfilepath,'w')
+    writer = csv.writer(csvfile)
+    writer.writerow(passwords) 
  
 def get_user():
     uname = input("\nInput new Username: ")
     previous = len(users)
-    users.add(uname)
+    users.append(uname)
     if previous < len(users):
         print("\nUsername accepted.")
     else:
@@ -39,7 +48,7 @@ def get_user():
             
 def get_pass():
     passw = getpass.getpass("\nInput new Password:")
-    passwords.add(passw)
+    passwords.append(passw)
     print("\nThank you for your time!\n")
 
 def goto(line):
@@ -49,6 +58,7 @@ def goto(line):
 
 read_user(users)
 read_pass(passwords)
+clear()
 
 index = input("\nSign up or sign in? ")
 
