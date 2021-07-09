@@ -64,33 +64,40 @@ clear()
 
 index = input("\nSign up or sign in? ")
 
-if index == "Sign up" or index == "sign up":
-    get_user()
-    get_pass()
-    write_users()
-    write_pass()
+global_access = False
+while global_access == False:
+ if index == "Sign up" or index == "sign up":
+     get_user()
+     get_pass()
+     write_users()
+     write_pass()
+     global_access = True
     
-else:
-    access = False
-    while access == False : 
-        uname = input("Username: ")
-        for x in users:
-            if uname == x :
-                print("Username accepted.")
-            else:
-                print("Username not on the list.")
-                access = True
+ elif index == "Sign in" or index == "sign in":
+     user_access = False
+     while user_access == False: 
+       uname = input("Username: ")
+       if uname in users:
+          print("\nUsername accepted!\n")
+          user_access = True
+      
+       else:
+          user_access = False
+          print("\nUsername not on the list. Try again.\n")
 
-        if access == True :
-            continue
-        else:
-            passw = getpass.getpass("Password: ")
-            for x in passwords:
-                if passw == x :
-                    access = True
-                    print("Access granted!")
-                else:
-
-                    access = False
-                    print("Access denied. Try again...")
+     pass_access = False
+     while pass_access == False:	  
+            
+        passw = getpass.getpass("Password: ")
+        if passw in passwords:
+          pass_access = True
+          print("\nAccess granted!\nWelcome back!\n")
+  	else:
+	  pass_access = False
+	  print("\nAccess denied. Try again...\n")
+global_access = True
+		
+  else:
+     print("\nOption not valid. Try again\n")
+     global_access = False
 
