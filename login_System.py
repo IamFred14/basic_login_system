@@ -19,10 +19,8 @@ def reader(dict):
 
     
 reader(users)
-print(users)
 
 index = input("\nRegister or log in? ").capitalize()
-access = False
 
 
 
