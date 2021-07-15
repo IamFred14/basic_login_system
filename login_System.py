@@ -7,18 +7,21 @@ users = {}
    
 def writer(user,password):
     file = open(ufilepath, 'a')
-    file.write(user + ',' + password+'\n')
-    file.close
+    file.write(user + ',' + password+"\n")
+    file.close()
 
 
 def reader(dict):
     file = open(ufilepath, 'r')
     for x in file:
         user, passwords = x.split(',')
+        passwords = passwords.strip(' \n')
         dict[user] = passwords
+    file.close()
 
     
 reader(users)
+print(users)
 
 index = input("\nRegister or log in? ").capitalize()
 
@@ -32,7 +35,7 @@ if index == "Register":
     
     
 
-elif index == "Log in":
+elif (index == "Log in" or index == "Login"):
     user = input("Username: ")
     password = getpass.getpass("Password: ")
     if (user in users.keys()) and (password in users.values()):
