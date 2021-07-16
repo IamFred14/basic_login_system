@@ -1,31 +1,24 @@
 #This application serves as a login interface.
 import getpass 
-from pathlib import Path
 
-ufilepath = Path("./user_info.txt")
 users = {}
    
 def writer(user,password):
-    file = open(ufilepath, 'a')
+    file = open("/user_info.txt", 'a')
     file.write(user + ',' + password+"\n")
     file.close()
 
-
 def reader(dict):
-    file = open(ufilepath, 'r')
+    file = open("/user_info.txt", 'r')
     for x in file:
         user, passwords = x.split(',')
         passwords = passwords.strip(' \n')
         dict[user] = passwords
     file.close()
 
-    
 reader(users)
-print(users)
 
 index = input("\nRegister or log in? ").capitalize()
-
-
 
 if index == "Register":
     user = input("Username: ")
@@ -33,8 +26,6 @@ if index == "Register":
     writer(user,password)
     print("Registration Successful! Try to Log in.")
     
-    
-
 elif (index == "Log in" or index == "Login"):
     user = input("Username: ")
     password = getpass.getpass("Password: ")

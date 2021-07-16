@@ -1,7 +1,0 @@
-frederico,thisisatest
-vanessa,bababa
-frederico,kakakak
-frederico,kakaka
-frederico ,ahahaha
-nduejdlo,kjakakaka
-usernmame,password
