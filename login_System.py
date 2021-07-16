@@ -1,32 +1,34 @@
-#This application serves as a login interface.
+# This application serves as a login interface.
 import getpass 
 
 users = {}
-   
-def writer(user,password):
-    file = open("/user_info.txt", 'a')
-    file.write(user + ',' + password+"\n")
-    file.close()
 
-def reader(dict):
-    file = open("/user_info.txt", 'r')
-    for x in file:
-        user, passwords = x.split(',')
-        passwords = passwords.strip(' \n')
-        dict[user] = passwords
-    file.close()
+
+def writer(username, passwords):
+    with open("user_info.txt", 'a') as file:
+        file.write(username + ',' + passwords+"\n")
+
+
+def reader(dic):
+    with open("user_info.txt", 'r') as file:
+        for x in file:
+            username, passwords = x.split(',')
+            passwords = passwords.strip(' \n')
+            dic[user] = passwords
+
 
 reader(users)
+
 
 index = input("\nRegister or log in? ").capitalize()
 
 if index == "Register":
     user = input("Username: ")
     password = getpass.getpass("Password: ")
-    writer(user,password)
+    writer(user, password)
     print("Registration Successful! Try to Log in.")
-    
-elif (index == "Log in" or index == "Login"):
+
+elif index == "Log in" or index == "Login":
     user = input("Username: ")
     password = getpass.getpass("Password: ")
     if (user in users.keys()) and (password in users.values()):
